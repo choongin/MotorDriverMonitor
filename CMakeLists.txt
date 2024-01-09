@@ -56,6 +56,10 @@ add_library(imgui_backend_glfw ${BACKEND_FILE})
 set(BACKEND_FILE ./libs/imgui/backends/imgui_impl_opengl3.cpp)
 add_library(imgui_backend_opengl3 ${BACKEND_FILE})
 
+set(BACKEND_FILE ./libs/imgui/implot/implot.cpp ./libs/imgui/implot/implot_demo.cpp ./libs/imgui/implot/implot_items.cpp)
+add_library(implot ${BACKEND_FILE})
+set(BACKEND_FILE ./libs/imgui/imgui-knobs/imgui-knobs.cpp)
+add_library(imknobs ${BACKEND_FILE})
 
 ## Create main executable
 add_executable(MDM)
@@ -64,9 +68,12 @@ target_include_directories(
         MDM
         PRIVATE
         ${ImGUI_DIR}/
+        ${ImGUI_DIR}/implot/
+        ${ImGUI_DIR}/imgui-knobs/
+
 )
 
-target_link_libraries(MDM PRIVATE imgui_backend_opengl3 OpenGL::GL glfw imgui_backend_glfw ${CMAKE_DL_LIBS})
+target_link_libraries(MDM PRIVATE implot imknobs imgui_backend_opengl3 OpenGL::GL glfw imgui_backend_glfw ${CMAKE_DL_LIBS})
 
 
 target_sources(
